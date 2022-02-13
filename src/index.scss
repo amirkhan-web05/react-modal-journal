@@ -1,0 +1,164 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.btn {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-top: 15em;
+
+  &__modal {
+    margin: 0 15px !important;
+  }
+}
+
+.images {
+  text-align: center;
+}
+
+.modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  &__close {
+    margin-bottom: 15px !important;
+  }
+}
+
+.userlist__title {
+  text-align: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.sidebar {
+  position: fixed;
+  top: 7.8%;
+  left: 0;
+  height: 100%;
+  width: 260px;
+  background: #110fa2;
+}
+
+.logo-details {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  margin-top: 15px;
+  max-width: 260px;
+
+  &__name {
+    font-size: 30px;
+    color: #fff;
+    margin-left: 10px;
+  }
+
+  &__icon {
+    color: #fff;
+    font-size: 30px;
+  }
+}
+
+.list {
+  position: relative;
+  max-width: 260px;
+
+  li {
+    list-style: none;
+  }
+
+  &__name {
+    color: #fff;
+    font-size: 18px;
+    margin-left: 15px;
+  }
+
+  &__icon {
+    color: #fff;
+  }
+
+  &-details {
+    margin-left: 15px;
+    margin-top: 20px;
+
+    &__drop {
+      max-width: 160px;
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+    }
+
+    &__icon {
+      color: #fff;
+      font-size: 30px;
+    }
+
+    &__rotate {
+      color: #fff;
+      font-size: 30px;
+      transform: rotate(180deg) !important;
+    }
+  }
+}
+
+.sub-menu {
+  padding-top: 15px;
+  padding-left: 35px;
+
+  &__list {
+    color: #fff;
+    font-size: 17px;
+    padding-left: 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #322bfc;
+    }
+  }
+}
+
+.form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  &-input {
+    display: block !important;
+    margin: 20px 0 !important;
+  }
+  &-block {
+    margin: 0 auto !important;
+  }
+
+  &__title {
+    text-align: center !important;
+  }
+}
+
+.remove {
+  margin-left: 15px;
+  margin-top: 20em;
+}
+
+.google-icon {
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 1px 3px 9px 0px rgba(34, 60, 80, 0.2);
+  width: 30px;
+  padding: 5px;
+  border-radius: 5px;
+}

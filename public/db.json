@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Amirkhan"
+    },
+    {
+      "id": 2,
+      "name": "Islam"
+    },
+    {
+      "id": 3,
+      "name": "Shamil"
+    }
+  ],
+  "task": []
+}
