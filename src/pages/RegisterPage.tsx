@@ -4,14 +4,14 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { TypeFormData } from '../types';
-import { setData } from '../redux/actions/users';
 import { Link } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { AUTH_ROUTE } from '../utils';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import googleIcon from '../assets/google-svgrepo-com.svg'
 import { useTypedSelector } from '../hooks/useTypeSelector';
+import { setGoogle, setRegister } from '../redux/actions/auth';
+import { useAppDispatch } from '../hooks/useTypeDispatch';
+import { User } from 'firebase/auth';
 
 const schema = yup.object({
   email:yup.string().email('Invalid email format').required(),
@@ -19,12 +19,12 @@ const schema = yup.object({
 })
 
 export const RegiserPage:React.FC = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const provider = new GoogleAuthProvider()
 
-  const auth = getAuth()
   const {email, password} = useTypedSelector<TypeFormData>(state => state.login)
+  const auth = useTypedSelector<User | null>(state => state.auth.user)
+  const error = useTypedSelector<string>(state => state.auth.error)
   
   const { register, handleSubmit, formState:{errors} } = useForm<TypeFormData>({
     defaultValues: {
@@ -35,30 +35,18 @@ export const RegiserPage:React.FC = () => {
     resolver:yupResolver(schema)
   });
 
-  const onSubmit:SubmitHandler<TypeFormData> = ({email, password}) => {
-    const auth = getAuth();
-    
-    createUserWithEmailAndPassword(auth, email, password)
-    .then(({user}) => {
-      dispatch(setData({
-        email:user.email,
-        id:user.uid,
-        token:user.tenantId
-      }))
+  React.useEffect(() => {
+    if (auth) {
       navigate('/')
-    })
-    .catch(console.error)
-  }
+    }
+  }, [auth])
 
+  const onSubmit:SubmitHandler<TypeFormData> = ({email, password}:TypeFormData) => {
+    dispatch(setRegister(email, password))
+  }
   
   const googleLogin = () => {
-    signInWithPopup(auth, provider)
-    .then((result:any) => {
-      console.log(result);
-      navigate('/')
-    }).catch((error) => {
-      console.error('Error:', error)
-    });
+    dispatch(setGoogle())
   }
 
   return (
@@ -66,6 +54,7 @@ export const RegiserPage:React.FC = () => {
       <Typography className='form__title' variant='h3'>
         Register
       </Typography>
+      <FormHelperText sx={{textAlign:'center', fontSize:18}}>{error}</FormHelperText>
       <Input
         id='email'
         type='email'

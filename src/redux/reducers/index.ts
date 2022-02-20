@@ -1,12 +1,12 @@
+import { users } from './users';
 import { login } from './login';
 import { auth } from './auth';
-import { users } from './users';
 import {combineReducers} from 'redux'
 
 export const rootReducers = combineReducers({
-  users,
   auth,
-  login
+  login,
+  users
 })
 
 export type RootState = ReturnType<typeof rootReducers>

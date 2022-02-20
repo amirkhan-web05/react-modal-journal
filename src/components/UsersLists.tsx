@@ -5,11 +5,11 @@ import { Users } from './Users'
 
 export const UsersLists:React.FC<TypeUsersList> = ({users}):JSX.Element => {
   const [popup, setPopup] = React.useState<number | boolean>(0)
-  const changeHandler = (value:number) => {
+  const changeHandler = (value:number):void => {
     setPopup(value)
   }
 
-  const closeModals = () => {
+  const closeModals = ():void => {
     setPopup(false)
   }
 

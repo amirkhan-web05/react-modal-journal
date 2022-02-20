@@ -1,30 +1,24 @@
-import axios from 'axios'
 import React from 'react'
 import { Sidebar } from '../components/SideBar'
 import { UsersLists } from '../components/UsersLists'
 import { TypeUsers } from '../types'
 import { RemoveAuth } from '../components/RemoveAuth'
 import { useTypedSelector } from '../hooks/useTypeSelector'
-import { User } from 'firebase/auth'
+import { getAuth, User } from 'firebase/auth'
+import { fetchUsers } from '../redux/actions/users'
+import { useAppDispatch } from '../hooks/useTypeDispatch'
+import { setGoogle } from '../redux/actions/auth'
 
 export const HomePage:React.FC = () => {
-  const [users, setUsers] = React.useState<TypeUsers[]>([])
-  const auth = useTypedSelector<any>((state) => state.users.data)  
-  
-
-  const fetchUsers = () => {
-    try {
-      axios.get<TypeUsers[]>('https://jsonplaceholder.typicode.com/users?_limit=3').then(({data}) => {
-        setUsers(data);
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const dispatch = useAppDispatch()
+  const users = useTypedSelector<TypeUsers[]>(state => state.users.users)
+  const auth = useTypedSelector<User | null>(state => state.auth.user)
 
   React.useEffect(() => {
-    fetchUsers()
-  }, [])
+    dispatch(fetchUsers())
+  }, [dispatch])
+
+  console.log(auth)
   
   return (
     <>

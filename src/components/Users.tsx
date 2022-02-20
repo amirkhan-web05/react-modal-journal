@@ -5,8 +5,10 @@ import Box from '@mui/material/Box'
 import { FormControl, OutlinedInput, Typography } from '@mui/material'
 import axios from 'axios'
 import { TaskList } from './TaskList'
-import { Link } from 'react-router-dom'
-import { DETAILS_ROUTE } from '../utils'
+import { Link, Navigate } from 'react-router-dom'
+import { AUTH_ROUTE, DETAILS_ROUTE } from '../utils'
+import { useTypedSelector } from '../hooks/useTypeSelector'
+import { User } from 'firebase/auth'
 
 const box = {
   position: 'absolute',
@@ -23,7 +25,7 @@ const box = {
   pb: 3,
 };
 
-export const Users:React.FC<TypeUsers> = ({id, name, popup, onClickUsers, hideModal}):JSX.Element => {
+export const Users:React.FC<TypeUsers> = ({id, name, popup, hideModal}):JSX.Element => {
   const [task, setTask] = React.useState<TypeTask[]>([])
   const [value, setValue] = React.useState<string>('')
 
@@ -35,7 +37,7 @@ export const Users:React.FC<TypeUsers> = ({id, name, popup, onClickUsers, hideMo
           alert(`${name}:Task add`)
         }
 
-        await axios.post('https://jsonplaceholder.typicode.com/users', task).then(() => {
+        await axios.post(`https://jsonplaceholder.typicode.com/users`, task).then(() => {
           setTask(prev => [...prev, {
             id:Date.now(),
             title:value
@@ -70,7 +72,7 @@ export const Users:React.FC<TypeUsers> = ({id, name, popup, onClickUsers, hideMo
           <div>
             <div>
               <Typography variant='h4'>
-                <Link to={`${DETAILS_ROUTE}/${id}`} style={{color:'#000'}}>
+                <Link to={DETAILS_ROUTE + '/' + id} style={{color:'#000'}}>
                   {name}
                 </Link>
               </Typography>

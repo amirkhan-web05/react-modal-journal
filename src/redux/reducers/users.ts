@@ -1,21 +1,17 @@
-import { TypesData, Users } from './../types/index';
+import { Users } from "../types"
 
 const initialState = {
-  data: {
-    email:null,
-    token:null,
-    id:''
-  }
+  users:[]
 }
 
 type TypeInitialState = typeof initialState
 
-export const users = (state = initialState, action:TypesData):TypeInitialState => {
+export const users = (state = initialState, action:any):TypeInitialState => {
   switch (action.type) {
-    case Users.APP_USERS: {
+    case Users.APP_USER: {
       return {
         ...state,
-        data:action.payload
+        users:action.payload
       }
     }
 
@@ -23,4 +19,3 @@ export const users = (state = initialState, action:TypesData):TypeInitialState =
       return state
   }
 }
-

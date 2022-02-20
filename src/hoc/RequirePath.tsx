@@ -1,24 +1,29 @@
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Navigate, useLocation } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
+import { Navigate } from 'react-router-dom'
 import { useTypedSelector } from '../hooks/useTypeSelector'
-import { setAuth } from '../redux/actions/auth'
-import { setData } from '../redux/actions/users'
+import { setAuthOnState } from '../redux/actions/auth'
 import { AUTH_ROUTE } from '../utils'
+
 
 export const RequirePath: React.FC = ({ children }): JSX.Element => {
   const dispatch = useDispatch()
-  const auth = getAuth()
-
+  const auth = useTypedSelector<User | null>(state => state.auth.user)
+  const loaded = useTypedSelector<boolean>(state => state.auth.loaded)
+  
   React.useEffect(() => {
-    onAuthStateChanged(auth, (user:any) => {
-      if (user) {
-        dispatch(setData(user))
-      }
-    })
-  })
+    dispatch(setAuthOnState())
+  }, [])
+    
+
+  if (loaded) {
+    return <></>
+  }
+
+  if (!auth) {
+    return <Navigate to={`${AUTH_ROUTE}`}/>
+  }
 
   return (
     <>

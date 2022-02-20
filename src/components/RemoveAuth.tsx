@@ -1,30 +1,29 @@
-import { Button } from '@mui/material'
-import { deleteUser, getAuth } from 'firebase/auth'
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { Button } from '@mui/material'
 import { Link } from 'react-router-dom'
+import { useTypedSelector } from '../hooks/useTypeSelector'
 import { setRemove } from '../redux/actions/auth'
 import { AUTH_ROUTE } from '../utils'
+import { useAppDispatch } from '../hooks/useTypeDispatch'
+import { deleteUser } from 'firebase/auth'
 
 export const RemoveAuth:React.FC = () => {
-  const dispatch = useDispatch()
-
+  const dispatch = useAppDispatch()
+  const auth = useTypedSelector<any>(state => state.auth.user)
+  
   const removeUser = () => {
-    // const auth = getAuth();
-    // const user:any = auth.currentUser;
-
-    // deleteUser(user).then(() => {
-    //   dispatch(setRemove())
-    // })
+    deleteUser((auth)).then(() => {
+      dispatch(setRemove())
+    })
   }
 
   return (
     <div className='remove'>
-      {/* <Button onClick={removeUser} variant="contained">
-        <Link style={{textDecoration:'none', color:'#fff'}} to={`${AUTH_ROUTE}`}>
-          Delete Account
-        </Link>
-      </Button> */}
+      {auth && <Button onClick={removeUser} variant="contained">
+          <Link style={{color:'#fff'}} to={`${AUTH_ROUTE}`}>
+            Delete Account
+          </Link>        
+      </Button>}
     </div>
   )
 }

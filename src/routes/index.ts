@@ -22,7 +22,12 @@ export const publicRoutes:TypeRoutes[] = [
     Element: RegiserPage
   },
   {
-    path:DETAILS_ROUTE,
+    path:ADMIN_ROUTE,
+    Element:HomePage
+  },
+  {
+    path:DETAILS_ROUTE + '/:id',
     Element:DetailsPage
-  }
+  },
 ]
+

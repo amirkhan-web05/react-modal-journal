@@ -1,7 +1,16 @@
-import { TypeRegisterForm } from './../../types/index';
-import { Users } from './../types/index';
+import { getUsers } from './../../api/api';
+import { TypeUsers } from './../../types/index';
+import { TypeUsersData } from './../types';
+import { Users } from "../types"
+import { Dispatch } from 'react';
 
-export const setData = (data:TypeRegisterForm) => ({
-  type:Users.APP_USERS,
-  payload:data
+export const fetchUsers = () => (dispatch:Dispatch<TypeUsersData>) => {
+  getUsers().then(({data}) => {
+    dispatch(setUsers(data))
+  })
+}
+
+export const setUsers = (items:TypeUsers[]):TypeUsersData => ({
+  type:Users.APP_USER,
+  payload:items
 })

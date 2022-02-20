@@ -6,8 +6,13 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { AUTH_ROUTE } from '../utils'
+import { useTypedSelector } from '../hooks/useTypeSelector'
+import { User } from 'firebase/auth';
 
 export const Header:React.FC = ():JSX.Element => {
+  const auth = useTypedSelector<User | null>(state => state.auth.user)
+  const loaded = useTypedSelector<boolean>(state => state.auth.loaded)
+
   return (
     <Box sx={{ flexGrow: 1, marginBottom:'15px' }}>
     <AppBar position="static">
@@ -32,7 +37,7 @@ export const Header:React.FC = ():JSX.Element => {
         </Typography>
         <Typography variant='h5'>
           <Link style={{color:'#fff'}} to={`${AUTH_ROUTE}`}>
-            Login
+              Login
           </Link>
         </Typography>
       </Toolbar>
